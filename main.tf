@@ -14,26 +14,6 @@ data "aws_subnet_ids" "all" {
   vpc_id = "${data.aws_vpc.default.id}"
 }
 
-data "aws_ami" "amazon_linux" {
-  most_recent = true
-
-  filter {
-    name = "name"
-
-    values = [
-      "amzn-ami-hvm-*-x86_64-gp2",
-    ]
-  }
-
-  filter {
-    name = "owner-alias"
-
-    values = [
-      "amazon",
-    ]
-  }
-}
-
 module "security_group" {
   source = "terraform-aws-modules/security-group/aws"
 
@@ -46,12 +26,32 @@ module "security_group" {
   egress_rules        = ["all-all"]
 }
 
+data "aws_ami" "centos_7" {
+  most_recent = true
+
+  filter {
+    name = "name"
+
+    values = [
+      "Centos-7*-x86_64-*",
+    ]
+  }
+
+  filter {
+    name = "owner-alias"
+
+    values = [
+      "centos",
+    ]
+  }
+}
+
 module "ec2-instance" {
   source  = "terraform-aws-modules/ec2-instance/aws"
   version = "1.1.0"
 
   name                        = "example"
-  ami                         = "${data.aws_ami.amazon_linux.id}"
+  ami                         = "${data.aws_ami.centos_7.id}"
   instance_type               = "t2.micro"
   subnet_id                   = "${element(data.aws_subnet_ids.all.ids, 0)}"
   vpc_security_group_ids      = ["${module.security_group.this_security_group_id}"]
