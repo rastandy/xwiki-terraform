@@ -60,7 +60,7 @@ module "ec2_cluster" {
   ami                    = "${data.aws_ami.centos_7.image_id}"
   instance_type          = "t2.micro"
   key_name               = "${aws_key_pair.keypair.key_name}"
-  monitoring             = true
+  monitoring             = false
   vpc_security_group_ids = ["${module.security_group.this_security_group_id}"]
   subnet_id              = "${data.terraform_remote_state.vpc.public_subnets.0}"
 
