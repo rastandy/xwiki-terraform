@@ -47,7 +47,7 @@ module "security_group" {
   vpc_id      = "${data.terraform_remote_state.vpc.vpc_id}"
 
   ingress_cidr_blocks = ["0.0.0.0/0"]
-  ingress_rules       = ["ssh-tcp", "http-8080-tcp", "http-80-tcp", "all-icmp"]
+  ingress_rules       = ["ssh-tcp", "https-443-tcp", "http-80-tcp", "all-icmp"]
   egress_rules        = ["all-all"]
 }
 
@@ -63,8 +63,8 @@ module "ec2_cluster" {
   monitoring                  = false
   vpc_security_group_ids      = ["${module.security_group.this_security_group_id}"]
   subnet_id                   = "${data.terraform_remote_state.vpc.public_subnets.0}"
-  associate_public_ip_address = true
-  ebs_optimized               = true
+  associate_public_ip_address = false
+  # ebs_optimized               = true
 
   tags = {
     Environment = "${terraform.workspace}"

@@ -15,3 +15,7 @@ output "vpc_id" {
 output "public_subnets" {
   value = "${module.vpc.public_subnets}"
 }
+
+output "database_subnet_group" {
+  value = "${module.vpc.database_subnet_group}"
+}

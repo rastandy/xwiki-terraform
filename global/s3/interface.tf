@@ -5,7 +5,6 @@ variable "aws_region" {
 
 variable "remote_state_prefix" {
   description = "Remote state bucket prefix"
-  default     = "eu-central-1"
 }
 
 output "remote_state_id" {
