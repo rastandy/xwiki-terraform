@@ -1,3 +1,14 @@
+module "db_security_group" {
+  source = "github.com/rastandy/terraform-aws-security-group?ref=v1.13.0"
+
+  name        = "${var.service}-db-security-group"
+  description = "Security group for ${var.service} usage with the wiki Database"
+  vpc_id      = "${module.vpc.vpc_id}"
+
+  ingress_cidr_blocks = ["${module.vpc.public_subnets_cidr_blocks}"]
+  ingress_rules       = ["postgresql-tcp"]
+}
+
 module "db" {
   source = "github.com/rastandy/terraform-aws-rds?ref=v1.8.0"
 
@@ -21,7 +32,7 @@ module "db" {
 
   port = "${var.db_port}"
 
-  vpc_security_group_ids = ["${module.vpc.default_security_group_id}"]
+  vpc_security_group_ids = ["${module.db_security_group.this_security_group_id}"]
 
   maintenance_window = "Mon:00:00-Mon:03:00"
   backup_window      = "03:00-06:00"

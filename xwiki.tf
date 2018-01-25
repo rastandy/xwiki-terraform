@@ -58,3 +58,8 @@ module "ec2_cluster" {
     Service     = "${var.service}"
   }
 }
+
+resource "aws_eip" "xwiki_eip" {
+  instance = "${module.ec2_cluster.id[0]}"
+  vpc      = true
+}
