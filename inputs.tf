@@ -33,4 +33,3 @@ variable "db_password" {
 }
 
 ## End of Database variables
-
