@@ -49,7 +49,7 @@ module "ec2_cluster" {
   monitoring                  = false
   vpc_security_group_ids      = ["${module.security_group.this_security_group_id}"]
   subnet_id                   = "${module.vpc.public_subnets[0]}"
-  associate_public_ip_address = false
+  associate_public_ip_address = true
 
   # ebs_optimized               = true
 
