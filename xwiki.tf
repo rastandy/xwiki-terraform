@@ -1,17 +1,3 @@
-provider "aws" {
-  region = "${var.aws_region}"
-}
-
-data "terraform_remote_state" "vpc" {
-  backend = "s3"
-
-  config {
-    bucket = "${var.service}-remote-state"
-    key    = "env:/${terraform.workspace}/vpc/terraform.tfstate"
-    region = "${var.aws_region}"
-  }
-}
-
 data "aws_ami" "centos_7" {
   most_recent = true
 
@@ -40,11 +26,11 @@ resource "aws_key_pair" "keypair" {
 }
 
 module "security_group" {
-  source = "github.com/rastandy/terraform-aws-security-group?ref=1.13.0"
+  source = "github.com/rastandy/terraform-aws-security-group?ref=v1.13.0"
 
   name        = "${var.service}-security-group"
   description = "Security group for ${var.service} usage with EC2 instance"
-  vpc_id      = "${data.terraform_remote_state.vpc.vpc_id}"
+  vpc_id      = "${module.vpc.vpc_id}"
 
   ingress_cidr_blocks = ["0.0.0.0/0"]
   ingress_rules       = ["ssh-tcp", "https-443-tcp", "http-80-tcp", "all-icmp"]
@@ -62,8 +48,9 @@ module "ec2_cluster" {
   key_name                    = "${aws_key_pair.keypair.key_name}"
   monitoring                  = false
   vpc_security_group_ids      = ["${module.security_group.this_security_group_id}"]
-  subnet_id                   = "${data.terraform_remote_state.vpc.public_subnets.0}"
+  subnet_id                   = "${module.vpc.public_subnets[0]}"
   associate_public_ip_address = false
+
   # ebs_optimized               = true
 
   tags = {

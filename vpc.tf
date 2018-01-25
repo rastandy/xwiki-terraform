@@ -1,7 +1,3 @@
-provider "aws" {
-  region = "${var.aws_region}"
-}
-
 module "vpc" {
   source = "github.com/rastandy/terraform-aws-vpc?ref=v1.17.0"
 
