@@ -1,7 +1,7 @@
 # Image: Ubuntu server 16.04 LTS
 data "aws_ami" "xwiki_image" {
   most_recent = true
-  owners      = ["719747043315"] # Canonical
+  owners      = ["719747043315"]
 
   filter {
     name   = "virtualization-type"
