@@ -1,22 +1,26 @@
-data "aws_ami" "centos_7" {
+# Image: Ubuntu server 16.04 LTS
+data "aws_ami" "ubuntu" {
   most_recent = true
-
-  owners = ["679593333241"]
+  owners      = ["099720109477"] # Canonical
 
   filter {
-    name = "name"
-
-    values = [
-      "CentOS Linux 7 x86_64 HVM EBS*",
-    ]
+    name   = "virtualization-type"
+    values = ["hvm"]
   }
 
   filter {
-    name = "owner-alias"
+    name   = "architecture"
+    values = ["x86_64"]
+  }
 
-    values = [
-      "aws-marketplace",
-    ]
+  filter {
+    name   = "image-type"
+    values = ["machine"]
+  }
+
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-*"]
   }
 }
 
@@ -43,7 +47,7 @@ module "ec2_cluster" {
   name  = "xwiki-instance-${terraform.workspace}"
   count = 1
 
-  ami                         = "${data.aws_ami.centos_7.image_id}"
+  ami                         = "${data.aws_ami.ubuntu.image_id}"
   instance_type               = "t2.micro"
   key_name                    = "${aws_key_pair.keypair.key_name}"
   monitoring                  = false
