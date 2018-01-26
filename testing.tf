@@ -5,9 +5,9 @@
 #   associate_public_ip_address = true
 #   vpc_security_group_ids      = ["${module.security_group.this_security_group_id}"]
 #   subnet_id                   = "${module.vpc.public_subnets[1]}"
-
 #   tags {
 #     Name        = "EUCP XWiki Test Instance"
 #     Environment = "${terraform.workspace}"
 #   }
 # }
+

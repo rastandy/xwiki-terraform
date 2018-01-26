@@ -1,4 +1,3 @@
-
 # Availabilty zones in the configured AWS region
 data "aws_availability_zones" "azs" {}
 
