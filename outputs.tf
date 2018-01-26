@@ -36,3 +36,4 @@ output "db_password" {
 }
 
 ## End of XWiki outputs
+
