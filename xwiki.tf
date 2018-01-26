@@ -1,7 +1,7 @@
 # Image: Ubuntu server 16.04 LTS
-data "aws_ami" "ubuntu" {
+data "aws_ami" "xwiki_image" {
   most_recent = true
-  owners      = ["099720109477"] # Canonical
+  owners      = ["719747043315"] # Canonical
 
   filter {
     name   = "virtualization-type"
@@ -20,7 +20,7 @@ data "aws_ami" "ubuntu" {
 
   filter {
     name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-*"]
+    values = ["XWiki*"]
   }
 }
 
@@ -41,29 +41,26 @@ module "security_group" {
   egress_rules        = ["all-all"]
 }
 
-module "ec2_cluster" {
-  source = "github.com/rastandy/terraform-aws-ec2-instance?ref=v1.2.0"
-
-  name  = "xwiki-instance-${terraform.workspace}"
+resource "aws_instance" "xwiki_instance" {
   count = 1
 
-  ami                         = "${data.aws_ami.ubuntu.image_id}"
-  instance_type               = "t2.micro"
-  key_name                    = "${aws_key_pair.keypair.key_name}"
-  monitoring                  = false
-  vpc_security_group_ids      = ["${module.security_group.this_security_group_id}"]
-  subnet_id                   = "${module.vpc.public_subnets[0]}"
-  associate_public_ip_address = true
+  ami                    = "${data.aws_ami.xwiki_image.image_id}"
+  instance_type          = "t2.micro"
+  key_name               = "${aws_key_pair.keypair.key_name}"
+  monitoring             = false
+  vpc_security_group_ids = ["${module.security_group.this_security_group_id}"]
+  subnet_id              = "${module.vpc.public_subnets[0]}"
 
   # ebs_optimized               = true
 
   tags = {
+    Name        = "xwiki-instance-${terraform.workspace}"
     Environment = "${terraform.workspace}"
     Service     = "${var.service}"
   }
 }
 
 resource "aws_eip" "xwiki_eip" {
-  instance = "${module.ec2_cluster.id[0]}"
+  instance = "${aws_instance.xwiki_instance.id}"
   vpc      = true
 }
