@@ -32,6 +32,7 @@ output "db_user" {
 
 output "db_password" {
   description = "The database password"
+  sensitive   = true
   value       = "${module.db.this_db_instance_password}"
 }
 
