@@ -11,7 +11,7 @@ variable "project" {
 
 variable "service" {
   description = "The service name this resources are for"
-  default     = "cmcc-eucp-xwiki"
+  default     = "eucp-xwiki"
 }
 
 ## End of Main variables
