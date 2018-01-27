@@ -1,4 +1,4 @@
-# Image: Ubuntu server 16.04 LTS
+# Image: XWiki CMCC on Ubuntu server 16.04 LTS
 data "aws_ami" "xwiki_image" {
   most_recent = true
   owners      = ["719747043315"]
