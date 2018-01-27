@@ -45,7 +45,7 @@ resource "aws_instance" "xwiki_instance" {
   count = 1
 
   ami                    = "${data.aws_ami.xwiki_image.image_id}"
-  instance_type          = "t2.micro"
+  instance_type          = "t2.small"
   key_name               = "${aws_key_pair.keypair.key_name}"
   monitoring             = false
   vpc_security_group_ids = ["${module.security_group.this_security_group_id}"]
