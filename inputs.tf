@@ -31,6 +31,11 @@ variable "xwiki_version" {
 
 ## Database variables
 
+variable "db_instance_type" {
+  description = "The database EC2 instance type"
+  default     = "db.t2.micro"
+}
+
 variable "db_port" {
   description = "The database port number"
   default     = "5432"

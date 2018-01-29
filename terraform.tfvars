@@ -9,5 +9,7 @@ ec2_instance_type = "t2.small"
 xwiki_version = "8.4.5"
 
 ## Database settings
+db_instance_type = "db.t2.micro"
+
 db_port = "5432"
 db_user = "xwiki"
