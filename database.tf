@@ -17,7 +17,7 @@ module "db" {
   engine            = "postgres"
   engine_version    = "9.6.3"
   instance_class    = "${var.db_instance_type}"
-  allocated_storage = 5
+  allocated_storage = "${var.db_allocated_storage}"
   storage_encrypted = false
 
   # kms_key_id        = "arm:aws:kms:<region>:<accound id>:key/<kms key id>"
@@ -56,5 +56,5 @@ module "db" {
   skip_final_snapshot = false
 
   # Snapshot name upon DB deletion
-  final_snapshot_identifier = "${var.service}-database"
+  final_snapshot_identifier = "${var.service}-${terraform.workspace}-database"
 }

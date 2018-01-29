@@ -31,6 +31,11 @@ variable "xwiki_version" {
 
 ## Database variables
 
+variable "db_allocated_storage" {
+  description = "The database size in Gb"
+  default     = 5
+}
+
 variable "db_instance_type" {
   description = "The database EC2 instance type"
   default     = "db.t2.micro"

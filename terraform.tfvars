@@ -9,6 +9,7 @@ ec2_instance_type = "t2.small"
 xwiki_version = "8.4.5"
 
 ## Database settings
+db_allocated_storage = 5
 db_instance_type = "db.t2.micro"
 
 db_port = "5432"
