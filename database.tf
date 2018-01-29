@@ -1,7 +1,7 @@
 module "db_security_group" {
   source = "github.com/rastandy/terraform-aws-security-group?ref=v1.13.0"
 
-  name        = "${var.service}-db-security-group"
+  name        = "${var.service}-${terraform.workspace}-db-security-group"
   description = "Security group for ${var.service} usage with the wiki Database"
   vpc_id      = "${module.vpc.vpc_id}"
 
@@ -12,7 +12,7 @@ module "db_security_group" {
 module "db" {
   source = "github.com/rastandy/terraform-aws-rds?ref=v1.8.0"
 
-  identifier = "${var.service}-database"
+  identifier = "${var.service}-${terraform.workspace}-database"
 
   engine            = "postgres"
   engine_version    = "9.6.3"

@@ -14,7 +14,20 @@ variable "service" {
   default     = "eucp-xwiki"
 }
 
+variable "ec2_instance_type" {
+  description = "The EC2 instance type for the XWiki service"
+  default     = "t2.micro"
+}
+
 ## End of Main variables
+
+## XWiki variables
+
+variable "xwiki_version" {
+  description = "XWiki version to install"
+}
+
+## XWiki variables
 
 ## Database variables
 
