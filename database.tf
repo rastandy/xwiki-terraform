@@ -47,6 +47,8 @@ module "db" {
     Environment = "${terraform.workspace}"
   }
 
+  copy_tags_to_snapshot = true
+
   # DB subnet group
   subnet_ids = ["${module.vpc.database_subnets}"]
 
