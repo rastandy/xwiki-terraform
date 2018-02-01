@@ -72,7 +72,7 @@ resource "aws_ebs_volume" "xwiki_permanent_dir" {
   type              = "gp2"
 
   tags = {
-    Name        = "xwiki-instance-${terraform.workspace}-permanent-dir-volume"
+    Name        = "${var.service}-${terraform.workspace}-permanent-dir-volume"
     Environment = "${terraform.workspace}"
     Service     = "${var.service}"
   }
