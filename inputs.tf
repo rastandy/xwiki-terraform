@@ -27,6 +27,16 @@ variable "xwiki_version" {
   description = "XWiki version to install"
 }
 
+variable "xwiki_permanent_dir_volume_block_device" {
+  description = "XWiki permanentDirectory volume size"
+  default     = "/dev/xvdh"
+}
+
+variable "xwiki_permanent_directory_volume_size" {
+  description = "XWiki permanentDirectory volume size"
+  default     = 5
+}
+
 ## XWiki variables
 
 ## Database variables
