@@ -69,6 +69,7 @@ resource "aws_volume_attachment" "xwiki_permanent_dir_attachment" {
 resource "aws_ebs_volume" "xwiki_permanent_dir" {
   availability_zone = "${aws_instance.xwiki_instance.availability_zone}"
   size              = "${var.xwiki_permanent_directory_volume_size}"
+  type              = "gp2"
 
   tags = {
     Name        = "xwiki-instance-${terraform.workspace}-permanent-dir-volume"
