@@ -4,9 +4,10 @@ project = "EUCP"
 service = "eucp-xwiki"
 
 ec2_instance_type = "t2.small"
+xwiki_permanent_directory_volume_size = 5
 
 ## XWiki settings
-xwiki_version = "8.4.5"
+xwiki_version = "9.11.2"
 
 ## Database settings
 db_allocated_storage = 5
