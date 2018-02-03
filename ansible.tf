@@ -35,6 +35,6 @@ resource "null_resource" "inventory" {
   }
 
   provisioner "local-exec" {
-    command = "echo '${data.template_file.inventory_template.rendered}' > ansible/inventory"
+    command = "echo '${data.template_file.inventory_template.rendered}' > ansible/inventory-${var.servername}"
   }
 }
