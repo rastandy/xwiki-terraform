@@ -123,4 +123,3 @@ resource "null_resource" "inventory" {
     command = "echo '${data.template_file.inventory_template.rendered}' > ansible/inventory"
   }
 }
-
