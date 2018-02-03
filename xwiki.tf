@@ -60,19 +60,19 @@ resource "aws_instance" "xwiki_instance" {
   }
 }
 
-resource "aws_volume_attachment" "xwiki_permanent_dir_attachment" {
+resource "aws_volume_attachment" "xwiki_permanent_data_attachment" {
   device_name = "${var.xwiki_permanent_dir_volume_block_device}"
-  volume_id   = "${aws_ebs_volume.xwiki_permanent_dir.id}"
+  volume_id   = "${aws_ebs_volume.xwiki_permanent_data.id}"
   instance_id = "${aws_instance.xwiki_instance.id}"
 }
 
-resource "aws_ebs_volume" "xwiki_permanent_dir" {
+resource "aws_ebs_volume" "xwiki_permanent_data" {
   availability_zone = "${aws_instance.xwiki_instance.availability_zone}"
   size              = "${var.xwiki_permanent_directory_volume_size}"
   type              = "gp2"
 
   tags = {
-    Name        = "${var.service}-${terraform.workspace}-permanent-dir-volume"
+    Name        = "${var.service}-${terraform.workspace}-permanent-data-volume"
     Environment = "${terraform.workspace}"
     Service     = "${var.service}"
   }
