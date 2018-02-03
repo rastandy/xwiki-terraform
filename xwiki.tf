@@ -86,7 +86,7 @@ resource "aws_eip" "xwiki_eip" {
 data "template_file" "host_vars_template" {
   template = "${file("${path.module}/templates/host_vars.yml")}"
 
-  depends_on = ["${module.db.this_db_instance_address}"]
+  # depends_on = ["module.db"]
 
   vars {
     db_hostname = "${module.db.this_db_instance_address}"
@@ -106,7 +106,7 @@ resource "null_resource" "host_vars" {
 data "template_file" "inventory_template" {
   template = "${file("${path.module}/templates/inventory")}"
 
-  depends_on = ["${var.servername}", "${aws_eip.xwiki_eip.public_ip}"]
+  # depends_on = ["aws_eip.xwiki_eip"]
 
   vars {
     servername = "${var.servername}"
