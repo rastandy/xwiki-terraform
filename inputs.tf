@@ -37,6 +37,10 @@ variable "xwiki_permanent_directory_volume_size" {
   default     = 5
 }
 
+variable "servername" {
+  description = "XWiki instance domain name"
+}
+
 ## XWiki variables
 
 ## Database variables
