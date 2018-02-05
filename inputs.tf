@@ -22,10 +22,13 @@ variable "ec2_instance_type" {
 ## End of Main variables
 
 ## XWiki variables
-
-variable "xwiki_version" {
-  description = "XWiki version to install"
+variable "xwiki_ami" {
+  description = "XWiki ami to use for booting the instance"
 }
+
+# variable "xwiki_version" {
+#   description = "XWiki version to install"
+# }
 
 variable "xwiki_permanent_dir_volume_block_device" {
   description = "XWiki permanentDirectory volume size"

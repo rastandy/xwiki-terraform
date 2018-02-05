@@ -1,28 +1,28 @@
 # Image: XWiki CMCC on Ubuntu server 16.04 LTS
-data "aws_ami" "xwiki_image" {
-  most_recent = true
-  owners      = ["719747043315"]
+# data "aws_ami" "xwiki_image" {
+#   most_recent = true
+#   owners      = ["719747043315"]
 
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
+#   filter {
+#     name   = "virtualization-type"
+#     values = ["hvm"]
+#   }
 
-  filter {
-    name   = "architecture"
-    values = ["x86_64"]
-  }
+#   filter {
+#     name   = "architecture"
+#     values = ["x86_64"]
+#   }
 
-  filter {
-    name   = "image-type"
-    values = ["machine"]
-  }
+#   filter {
+#     name   = "image-type"
+#     values = ["machine"]
+#   }
 
-  filter {
-    name   = "name"
-    values = ["XWiki ${var.xwiki_version}*"]
-  }
-}
+#   filter {
+#     name   = "name"
+#     values = ["XWiki ${var.xwiki_version}*"]
+#   }
+# }
 
 resource "aws_key_pair" "keypair" {
   key_name   = "${var.service}-${terraform.workspace}-key-pair"
@@ -50,7 +50,8 @@ module "security_group" {
 resource "aws_instance" "xwiki_instance" {
   count = 1
 
-  ami                    = "${data.aws_ami.xwiki_image.image_id}"
+  # ami                    = "${data.aws_ami.xwiki_image.image_id}"
+  ami                    = "${var.xwiki_ami}"
   instance_type          = "${var.ec2_instance_type}"
   key_name               = "${aws_key_pair.keypair.key_name}"
   monitoring             = false
