@@ -1,18 +1,24 @@
 module "db_security_group" {
   source = "github.com/rastandy/terraform-aws-security-group?ref=v1.13.0"
 
-  name        = "${var.service}-${terraform.workspace}-db-security-group"
+  name        = "${var.project}-${var.service}-${terraform.workspace}-db-security-group"
   description = "Security group for ${var.service} usage with the wiki Database"
   vpc_id      = "${module.vpc.vpc_id}"
 
   ingress_cidr_blocks = ["${module.vpc.public_subnets_cidr_blocks}"]
   ingress_rules       = ["postgresql-tcp"]
+
+  tags = {
+    Project     = "${var.project}"
+    Serivce     = "${var.service}"
+    Environment = "${terraform.workspace}"
+  }
 }
 
 module "db" {
   source = "github.com/rastandy/terraform-aws-rds?ref=v1.8.0"
 
-  identifier = "${var.service}-${terraform.workspace}-database"
+  identifier = "${var.project}-${var.service}-${terraform.workspace}-database"
 
   engine            = "postgres"
   engine_version    = "9.6.3"
@@ -40,13 +46,6 @@ module "db" {
   # disable backups to create DB faster
   backup_retention_period = 7
 
-  tags = {
-    Owner       = "CMCC"
-    Project     = "${var.project}"
-    Serivce     = "${var.service}"
-    Environment = "${terraform.workspace}"
-  }
-
   copy_tags_to_snapshot = true
 
   # DB subnet group
@@ -59,4 +58,10 @@ module "db" {
 
   # Snapshot name upon DB deletion
   final_snapshot_identifier = "${var.service}-${terraform.workspace}-database"
+
+  tags = {
+    Project     = "${var.project}"
+    Serivce     = "${var.service}"
+    Environment = "${terraform.workspace}"
+  }
 }

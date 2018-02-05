@@ -4,7 +4,7 @@ data "aws_availability_zones" "azs" {}
 module "vpc" {
   source = "github.com/rastandy/terraform-aws-vpc?ref=v1.17.0"
 
-  name = "eucp-vpc-${terraform.workspace}"
+  name = "${var.project}-vpc-${terraform.workspace}"
 
   cidr = "10.0.0.0/16"
 
@@ -16,7 +16,7 @@ module "vpc" {
   enable_nat_gateway = false
 
   tags = {
-    Project     = "EUCP"
+    Project     = "${var.project}"
     Service     = "${var.service}"
     Environment = "${terraform.workspace}"
   }

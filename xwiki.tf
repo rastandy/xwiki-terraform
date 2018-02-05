@@ -32,13 +32,19 @@ resource "aws_key_pair" "keypair" {
 module "security_group" {
   source = "github.com/rastandy/terraform-aws-security-group?ref=v1.13.0"
 
-  name        = "${var.service}-${terraform.workspace}-security-group"
+  name        = "${var.project}-${var.service}-${terraform.workspace}-security-group"
   description = "Security group for ${var.service} usage with EC2 instance"
   vpc_id      = "${module.vpc.vpc_id}"
 
   ingress_cidr_blocks = ["0.0.0.0/0"]
   ingress_rules       = ["ssh-tcp", "https-443-tcp", "http-80-tcp", "all-icmp"]
   egress_rules        = ["all-all"]
+
+  tags = {
+    Project     = "${var.project}"
+    Serivce     = "${var.service}"
+    Environment = "${terraform.workspace}"
+  }
 }
 
 resource "aws_instance" "xwiki_instance" {
@@ -53,10 +59,11 @@ resource "aws_instance" "xwiki_instance" {
 
   # ebs_optimized               = true
 
-  tags = {
-    Name        = "xwiki-instance-${terraform.workspace}"
-    Environment = "${terraform.workspace}"
+  tags {
+    Name        = "xwiki-instance-${var.project}-${terraform.workspace}"
+    Project     = "${var.project}"
     Service     = "${var.service}"
+    Environment = "${terraform.workspace}"
   }
 }
 
@@ -71,14 +78,22 @@ resource "aws_ebs_volume" "xwiki_permanent_data" {
   size              = "${var.xwiki_permanent_directory_volume_size}"
   type              = "gp2"
 
-  tags = {
-    Name        = "${var.service}-${terraform.workspace}-permanent-data-volume"
-    Environment = "${terraform.workspace}"
+  tags {
+    Name        = "${var.project}-${var.service}-${terraform.workspace}-permanent-data-volume"
+    Project     = "${var.project}"
     Service     = "${var.service}"
+    Environment = "${terraform.workspace}"
   }
 }
 
 resource "aws_eip" "xwiki_eip" {
   instance = "${aws_instance.xwiki_instance.id}"
   vpc      = true
+
+  tags {
+    Name        = "${var.project}-${var.service}-${terraform.workspace}-xwiki-eip"
+    Project     = "${var.project}"
+    Service     = "${var.service}"
+    Environment = "${terraform.workspace}"
+  }
 }
