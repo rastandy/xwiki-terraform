@@ -57,6 +57,7 @@ resource "aws_instance" "xwiki_instance" {
   monitoring             = false
   vpc_security_group_ids = ["${module.security_group.this_security_group_id}"]
   subnet_id              = "${module.vpc.public_subnets[0]}"
+  availability_zone      = "${data.aws_availability_zones.azs.names[0]}"
 
   # ebs_optimized               = true
 
