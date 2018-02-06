@@ -27,12 +27,6 @@
 resource "aws_key_pair" "keypair" {
   key_name   = "${var.project}-{var.service}-${terraform.workspace}-key-pair"
   public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCom3uwiMB266XmVvBu9wHaQf8VQyPDhBBiwOHBEiDU1mo258dqmRaGNslHZ09pbvLhqdkJL9JveHbJJq4vHSdjPQCxXvp2O+4UcokFewNkKOz+IssLWyYV+3HmFWy4n6KMkpEsGLu6JW8z3j1xMibu8Z7JquMC8Im+TenjpEfhaED5Zuo8I1E7QgmNnoX62dD3hrz70Je1t7yiSuOVoyqEX4bylvasMQOLamKfcSahLfr17o8hgHNcLnXwTc//rgK1vukVBpYIjyUmXpiAlKqPRRYTB6f8tAeOn3Mt4Be4+9pQG5RqCy0SzaGkDqLaxtwZ2eZ/AJYK8PzXuUyQ2lqZ arusso@Andrea-Mac.local"
-
-  tags {
-    Project     = "${var.project}"
-    Serivce     = "${var.service}"
-    Environment = "${terraform.workspace}"
-  }
 }
 
 module "security_group" {
