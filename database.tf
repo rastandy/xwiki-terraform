@@ -20,11 +20,12 @@ module "db" {
 
   identifier = "${var.project}-${var.service}-${terraform.workspace}-database"
 
-  engine            = "postgres"
-  engine_version    = "9.6.3"
-  instance_class    = "${var.db_instance_type}"
-  allocated_storage = "${var.db_allocated_storage}"
-  storage_encrypted = false
+  engine              = "postgres"
+  engine_version      = "9.6.3"
+  instance_class      = "${var.db_instance_type}"
+  allocated_storage   = "${var.db_allocated_storage}"
+  storage_encrypted   = false
+  snapshot_identifier = "${var.xwiki_db_snapshot_id}"
 
   # kms_key_id        = "arm:aws:kms:<region>:<accound id>:key/<kms key id>"
   name = "${var.db_user}"

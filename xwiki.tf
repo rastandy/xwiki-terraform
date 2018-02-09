@@ -79,6 +79,7 @@ resource "aws_ebs_volume" "xwiki_permanent_data" {
   availability_zone = "${aws_instance.xwiki_instance.availability_zone}"
   size              = "${var.xwiki_permanent_directory_volume_size}"
   type              = "gp2"
+  snapshot_id       = "${var.xwiki_permanent_directory_snapshot_id}"
 
   tags {
     Name        = "${var.project}-${var.service}-${terraform.workspace}-permanent-data-volume"

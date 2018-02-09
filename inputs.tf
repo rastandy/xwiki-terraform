@@ -48,6 +48,11 @@ variable "ec2_key_file" {
   description = "XWiki instance SSH access key"
 }
 
+variable "xwiki_permanent_directory_snapshot_id" {
+  description = "XWiki snapshot of a preexisting permanent directory volume"
+  default     = ""
+}
+
 ## End of XWiki variables
 
 ## Database variables
@@ -74,6 +79,11 @@ variable "db_user" {
 
 variable "db_password" {
   description = "The database password"
+}
+
+variable "xwiki_db_snapshot_id" {
+  description = "Snapshot of a preexisting XWiki database"
+  default     = ""
 }
 
 ## End of Database variables
