@@ -44,7 +44,11 @@ variable "servername" {
   description = "XWiki instance domain name"
 }
 
-## XWiki variables
+variable "ec2_key_file" {
+  description = "XWiki instance SSH access key"
+}
+
+## End of XWiki variables
 
 ## Database variables
 
