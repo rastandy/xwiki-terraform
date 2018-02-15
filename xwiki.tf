@@ -62,10 +62,12 @@ resource "aws_instance" "xwiki_instance" {
   # ebs_optimized               = true
 
   tags {
-    Name        = "xwiki-instance-${var.project}-${terraform.workspace}"
-    Project     = "${var.project}"
-    Service     = "${var.service}"
-    Environment = "${terraform.workspace}"
+    Name             = "xwiki-instance-${var.project}-${terraform.workspace}"
+    Project          = "${var.project}"
+    Service          = "${var.service}"
+    Environment      = "${terraform.workspace}"
+    "daily-backup"   = "daily-backup"
+    "monthly-backup" = "monthly-backup"
   }
 }
 
