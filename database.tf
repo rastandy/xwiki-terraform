@@ -21,7 +21,7 @@ module "db" {
   identifier = "${var.project}-${var.service}-${terraform.workspace}-database"
 
   engine              = "postgres"
-  engine_version      = "9.6.3"
+  engine_version      = "9.6.6"
   instance_class      = "${var.db_instance_type}"
   allocated_storage   = "${var.db_allocated_storage}"
   storage_encrypted   = false
