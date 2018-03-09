@@ -62,7 +62,7 @@ resource "aws_instance" "xwiki_instance" {
   # ebs_optimized               = true
 
   tags {
-    Name             = "xwiki-instance-${var.project}-${terraform.workspace}"
+    Name             = "${var.project}-${var.service}-${terraform.workspace}"
     Project          = "${var.project}"
     Service          = "${var.service}"
     Environment      = "${terraform.workspace}"
