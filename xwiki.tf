@@ -42,7 +42,7 @@ module "security_group" {
 
   tags = {
     Project     = "${var.project}"
-    Serivce     = "${var.service}"
+    Service     = "${var.service}"
     Environment = "${terraform.workspace}"
   }
 }

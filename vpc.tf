@@ -4,7 +4,7 @@ data "aws_availability_zones" "azs" {}
 module "vpc" {
   source = "github.com/rastandy/terraform-aws-vpc?ref=v1.17.0"
 
-  name = "${var.project}-vpc-${terraform.workspace}"
+  name = "${var.project}-${var.service}-vpc-${terraform.workspace}"
 
   cidr = "10.0.0.0/16"
 
