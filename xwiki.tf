@@ -40,11 +40,7 @@ module "security_group" {
   ingress_rules       = ["ssh-tcp", "https-443-tcp", "http-80-tcp", "all-icmp"]
   egress_rules        = ["all-all"]
 
-  tags = {
-    Project     = "${var.project}"
-    Service     = "${var.service}"
-    Environment = "${terraform.workspace}"
-  }
+  tags = "${merge("${var.tags}", map("Environment", "${terraform.workspace}", "Project", "${var.project}", "Service", "${var.service}"))}"
 }
 
 resource "aws_instance" "xwiki_instance" {
@@ -61,14 +57,7 @@ resource "aws_instance" "xwiki_instance" {
 
   # ebs_optimized               = true
 
-  tags {
-    Name             = "${var.project}-${var.service}-${terraform.workspace}"
-    Project          = "${var.project}"
-    Service          = "${var.service}"
-    Environment      = "${terraform.workspace}"
-    "daily-backup"   = "daily-backup"
-    "monthly-backup" = "monthly-backup"
-  }
+  tags = "${merge("${var.tags}", map("Environment", "${terraform.workspace}", "Project", "${var.project}", "Service", "${var.service}", "Name", "${var.project}-${var.service}-${terraform.workspace}"))}"
 }
 
 resource "aws_volume_attachment" "xwiki_permanent_data_attachment" {
@@ -83,22 +72,12 @@ resource "aws_ebs_volume" "xwiki_permanent_data" {
   type              = "gp2"
   snapshot_id       = "${var.xwiki_permanent_directory_snapshot_id}"
 
-  tags {
-    Name        = "${var.project}-${var.service}-${terraform.workspace}-permanent-data-volume"
-    Project     = "${var.project}"
-    Service     = "${var.service}"
-    Environment = "${terraform.workspace}"
-  }
+  tags = "${merge("${var.tags}", map("Environment", "${terraform.workspace}", "Project", "${var.project}", "Service", "${var.service}", "Name", "${var.project}-${var.service}-${terraform.workspace}-permanent-data-volume"))}"
 }
 
 resource "aws_eip" "xwiki_eip" {
   instance = "${aws_instance.xwiki_instance.id}"
   vpc      = true
 
-  tags {
-    Name        = "${var.project}-${var.service}-${terraform.workspace}-xwiki-eip"
-    Project     = "${var.project}"
-    Service     = "${var.service}"
-    Environment = "${terraform.workspace}"
-  }
+  tags = "${merge("${var.tags}", map("Environment", "${terraform.workspace}", "Project", "${var.project}", "Service", "${var.service}", "Name", "${var.project}-${var.service}-${terraform.workspace}-xwiki-eip"))}"
 }

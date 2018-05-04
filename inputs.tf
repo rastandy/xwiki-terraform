@@ -14,6 +14,17 @@ variable "service" {
   default     = "eucp-xwiki"
 }
 
+variable "tags" {
+  type        = "map"
+  description = "Optional Tags"
+  default     = {}
+}
+
+variable "database_backup_retention_period" {
+  description = "Number of days a db backup will be retained"
+  default     = 30
+}
+
 variable "ec2_instance_type" {
   description = "The EC2 instance type for the XWiki service"
   default     = "t2.micro"

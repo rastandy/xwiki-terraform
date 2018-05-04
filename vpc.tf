@@ -15,9 +15,5 @@ module "vpc" {
 
   enable_nat_gateway = false
 
-  tags = {
-    Project     = "${var.project}"
-    Service     = "${var.service}"
-    Environment = "${terraform.workspace}"
-  }
+  tags = "${merge("${var.tags}", map("Environment", "${terraform.workspace}", "Project", "${var.project}", "Service", "${var.service}"))}"
 }

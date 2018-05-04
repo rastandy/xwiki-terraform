@@ -8,11 +8,7 @@ module "db_security_group" {
   ingress_cidr_blocks = ["${module.vpc.public_subnets_cidr_blocks}"]
   ingress_rules       = ["postgresql-tcp"]
 
-  tags = {
-    Project     = "${var.project}"
-    Serivce     = "${var.service}"
-    Environment = "${terraform.workspace}"
-  }
+  tags = "${merge("${var.tags}", map("Environment", "${terraform.workspace}", "Project", "${var.project}", "Service", "${var.service}"))}"
 }
 
 module "db" {
@@ -45,7 +41,7 @@ module "db" {
   backup_window      = "03:00-06:00"
 
   # disable backups to create DB faster
-  backup_retention_period = 7
+  backup_retention_period = "${var.database_backup_retention_period}"
 
   copy_tags_to_snapshot = true
 
@@ -60,9 +56,5 @@ module "db" {
   # Snapshot name upon DB deletion
   final_snapshot_identifier = "${var.service}-${terraform.workspace}-database"
 
-  tags = {
-    Project     = "${var.project}"
-    Serivce     = "${var.service}"
-    Environment = "${terraform.workspace}"
-  }
+  tags = "${merge("${var.tags}", map("Environment", "${terraform.workspace}", "Project", "${var.project}", "Service", "${var.service}"))}"
 }
